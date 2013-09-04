@@ -9,13 +9,14 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import play.test.WithApplication;
 import static play.test.Helpers.*;
-
+import com.avaje.ebean.Ebean;
 import play.libs.Yaml;
 
 public class ModelsTest extends WithApplication {
     @Before
     public void setUp() {
-        start(fakeApplication(inMemoryDatabase()));
+        start(fakeApplication(inMemoryDatabase(), fakeGlobal()));
+        Ebean.save((List) Yaml.load("initial-data.yml"));
     }
 	@Test
     public void createAndRetrieveUser() {
